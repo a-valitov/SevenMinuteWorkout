@@ -13,4 +13,7 @@
     <color name="colorAccent">#008F24</color>
     <color name="colorHighlighted">#C4C4C4</color>
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="toolbarColorControlNormal">#000000</color>
+    <color name="progressGray">#D4DEE7</color>
 </resources>
