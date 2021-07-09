@@ -15,6 +15,7 @@
         android:background="@color/white"
         android:theme="@style/ToolbarTheme" />
 
+    <!-- This ll is for pre-exercise countdown -->
     <LinearLayout
         android:id="@+id/llRestView"
         android:layout_width="match_parent"
@@ -36,19 +37,19 @@
         <FrameLayout
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/item_circular_color_accent_border">
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/progressBar_rest"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:background="@drawable/circular_progress_gray"
                 android:indeterminate="false"
-                android:max="10"
-                android:progress="100"
+                android:max="@integer/rest_time"
+                android:progress="@integer/rest_time"
                 android:progressDrawable="@drawable/circular_progress_bar"
                 android:rotation="-90" />
 
@@ -60,10 +61,68 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/tv_timer"
+                    android:id="@+id/tv_timer_rest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- And this ll is used while the exercise -->
+    <LinearLayout
+        android:id="@+id/llExerciseView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_exercise_activity"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exercise name"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/item_circular_color_accent_border">
+
+            <ProgressBar
+                android:id="@+id/progressBar_exercise"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circular_progress_gray"
+                android:indeterminate="false"
+                android:max="@integer/exercise_time"
+                android:progress="@integer/exercise_time"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                android:rotation="-90" />
+
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@drawable/item_circular_color_accent_background"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_timer_exercise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30"
                     android:textColor="@color/colorWhite"
                     android:textSize="25sp"
                     android:textStyle="bold" />
