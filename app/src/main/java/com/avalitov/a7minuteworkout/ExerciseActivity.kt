@@ -11,6 +11,8 @@ lateinit var llExerciseView : LinearLayout
 lateinit var toolbarExerciseActivity : androidx.appcompat.widget.Toolbar
 lateinit var tvTimerRest : TextView
 lateinit var tvTimerExercise : TextView
+lateinit var ivImage : ImageView
+lateinit var tvExerciseName : TextView
 
 class ExerciseActivity : AppCompatActivity() {
 
@@ -19,6 +21,8 @@ class ExerciseActivity : AppCompatActivity() {
     private var restProgress = 0
     private var exerciseProgress = 0
 
+    private var exerciseList: ArrayList<ExerciseModel>? = null
+    private var currentExercisePosition = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +33,8 @@ class ExerciseActivity : AppCompatActivity() {
         toolbarExerciseActivity = findViewById(R.id.toolbar_exercise_activity)
         tvTimerRest = findViewById(R.id.tv_timer_rest)
         tvTimerExercise = findViewById(R.id.tv_timer_exercise)
+        ivImage = findViewById(R.id.iv_image)
+        tvExerciseName = findViewById(R.id.tv_exercise_name)
 
         setSupportActionBar(toolbarExerciseActivity)
         val actionbar = supportActionBar
@@ -39,6 +45,8 @@ class ExerciseActivity : AppCompatActivity() {
         }
 
         setupRestView()
+
+        exerciseList = Constants.defaultExerciseList()
     }
 
     override fun onDestroy() {
@@ -60,12 +68,7 @@ class ExerciseActivity : AppCompatActivity() {
                 tvTimerRest.text = (Constants.REST_TIME - restProgress).toString()
             }
             override fun onFinish() {
-                Toast.makeText(
-                    this@ExerciseActivity,
-                    "Here now we will start the exercise.",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                currentExercisePosition++
                 setupExerciseView()
             }
         }.start()
@@ -82,13 +85,15 @@ class ExerciseActivity : AppCompatActivity() {
                 tvTimerExercise.text = (Constants.EXERCISE_TIME - exerciseProgress).toString()
             }
             override fun onFinish() {
-                Toast.makeText(
-                    this@ExerciseActivity,
-                    "The exercise has finished.",
+                if(currentExercisePosition < exerciseList!!.size - 1) {
+                    setupRestView()
+                } else {
+                    Toast.makeText(this@ExerciseActivity,
+                    "Congratulations! You have completed your 7 minutes workout!",
                     Toast.LENGTH_SHORT
-                ).show()
+                    ).show()
+                }
 
-                setupRestView()
             }
         }.start()
     }
@@ -99,7 +104,7 @@ class ExerciseActivity : AppCompatActivity() {
             restProgress = 0
         }
 
-        llExerciseView.visibility = View.INVISIBLE
+        llExerciseView.visibility = View.GONE
         llRestView.visibility = View.VISIBLE
         setRestProgressBar()
     }
@@ -110,9 +115,14 @@ class ExerciseActivity : AppCompatActivity() {
             exerciseProgress = 0
         }
 
-        llRestView.visibility = View.INVISIBLE
+        llRestView.visibility = View.GONE
         llExerciseView.visibility = View.VISIBLE
+
         setExerciseProgressBar()
+
+        //showing the name and image of a new exercise
+        ivImage.setImageResource(exerciseList!![currentExercisePosition].getImageNumber())
+        tvExerciseName.text = exerciseList!![currentExercisePosition].getName()
     }
 }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="exercise_time">11</integer>
-    <integer name="rest_time">4</integer>
+    <integer name="exercise_time">4</integer>
+    <integer name="rest_time">2</integer>
 
 </resources>
