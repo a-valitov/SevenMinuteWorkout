@@ -71,6 +71,26 @@
 
             </LinearLayout>
         </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="UPCOMING EXERCISE:"
+            android:textColor="@color/textLightGray"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_upcoming_exercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Jumping Jacks"
+            android:textColor="@color/textDarkGray"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
+
     </LinearLayout>
 
     <!-- And this ll is used while the exercise -->

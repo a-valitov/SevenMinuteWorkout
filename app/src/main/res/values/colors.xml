@@ -16,4 +16,7 @@
 
     <color name="toolbarColorControlNormal">#000000</color>
     <color name="progressGray">#D4DEE7</color>
+
+    <color name="textLightGray">#AAAAAA</color>
+    <color name="textDarkGray">#444444</color>
 </resources>

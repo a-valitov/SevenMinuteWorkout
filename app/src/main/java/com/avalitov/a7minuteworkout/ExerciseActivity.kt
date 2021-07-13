@@ -13,6 +13,7 @@ lateinit var tvTimerRest : TextView
 lateinit var tvTimerExercise : TextView
 lateinit var ivImage : ImageView
 lateinit var tvExerciseName : TextView
+lateinit var tvUpcomingExercise : TextView
 
 class ExerciseActivity : AppCompatActivity() {
 
@@ -35,6 +36,7 @@ class ExerciseActivity : AppCompatActivity() {
         tvTimerExercise = findViewById(R.id.tv_timer_exercise)
         ivImage = findViewById(R.id.iv_image)
         tvExerciseName = findViewById(R.id.tv_exercise_name)
+        tvUpcomingExercise = findViewById(R.id.tv_upcoming_exercise)
 
         setSupportActionBar(toolbarExerciseActivity)
         val actionbar = supportActionBar
@@ -44,9 +46,9 @@ class ExerciseActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        setupRestView()
-
         exerciseList = Constants.defaultExerciseList()
+
+        setupRestView()
     }
 
     override fun onDestroy() {
@@ -107,6 +109,7 @@ class ExerciseActivity : AppCompatActivity() {
         llExerciseView.visibility = View.GONE
         llRestView.visibility = View.VISIBLE
         setRestProgressBar()
+        tvUpcomingExercise.text = exerciseList!![currentExercisePosition + 1].getName()
     }
 
     private fun setupExerciseView(){
