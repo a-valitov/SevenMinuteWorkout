@@ -3,8 +3,13 @@ package com.avalitov.a7minuteworkout
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.View
 import android.widget.*
+import org.w3c.dom.Text
+import java.util.*
+import kotlin.collections.ArrayList
 
 lateinit var llRestView : LinearLayout
 lateinit var llExerciseView : LinearLayout
@@ -15,7 +20,9 @@ lateinit var ivImage : ImageView
 lateinit var tvExerciseName : TextView
 lateinit var tvUpcomingExercise : TextView
 
-class ExerciseActivity : AppCompatActivity() {
+class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
+
+    private var tts: TextToSpeech? = null // variable for TextToSpeech
 
     private var restTimer: CountDownTimer? = null
     private var exerciseTimer: CountDownTimer? = null
@@ -24,6 +31,27 @@ class ExerciseActivity : AppCompatActivity() {
 
     private var exerciseList: ArrayList<ExerciseModel>? = null
     private var currentExercisePosition = -1
+
+    //for TextToSpeech
+    override fun onInit(status: Int) {
+        //check if TTS works
+        if(status == TextToSpeech.SUCCESS) {
+            //set US English ad a language for TTS
+            val result = tts!!.setLanguage(Locale.US)
+
+            if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "The language specified is not supported.")
+                Toast.makeText(this, "The language specified is not supported", Toast.LENGTH_LONG).show()
+            }
+        } else {
+            Log.e("TTS", "Initialization failed.")
+            Toast.makeText(this, "Initialization failed", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun speakOut(text: String){
+        tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +74,9 @@ class ExerciseActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        // Initialize the TextToSpeech
+        tts = TextToSpeech(this, this)
+
         exerciseList = Constants.defaultExerciseList()
 
         setupRestView()
@@ -56,6 +87,16 @@ class ExerciseActivity : AppCompatActivity() {
             restTimer!!.cancel()
             restProgress = 0
         }
+        if(exerciseTimer != null) {
+            exerciseTimer!!.cancel()
+            exerciseProgress = 0
+        }
+
+        if(tts != null) {
+            tts!!.stop()
+            tts!!.shutdown()
+        }
+
         super.onDestroy()
     }
 
@@ -110,6 +151,8 @@ class ExerciseActivity : AppCompatActivity() {
         llRestView.visibility = View.VISIBLE
         setRestProgressBar()
         tvUpcomingExercise.text = exerciseList!![currentExercisePosition + 1].getName()
+        speakOut("Get ready for:" + tvUpcomingExercise.text)
+        //TODO: this fucktard doesn't speak the first exercise
     }
 
     private fun setupExerciseView(){
@@ -121,12 +164,15 @@ class ExerciseActivity : AppCompatActivity() {
         llRestView.visibility = View.GONE
         llExerciseView.visibility = View.VISIBLE
 
+        speakOut((exerciseList!![currentExercisePosition].getName()))
+
         setExerciseProgressBar()
 
         //showing the name and image of a new exercise
         ivImage.setImageResource(exerciseList!![currentExercisePosition].getImageNumber())
         tvExerciseName.text = exerciseList!![currentExercisePosition].getName()
     }
+
 }
 
 
