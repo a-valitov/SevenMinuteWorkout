@@ -1,5 +1,6 @@
 package com.avalitov.a7minuteworkout
 
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import org.w3c.dom.Text
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -23,6 +25,7 @@ lateinit var tvUpcomingExercise : TextView
 class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = null // variable for TextToSpeech
+    private var player: MediaPlayer? = null // variable for Media Player
 
     private var restTimer: CountDownTimer? = null
     private var exerciseTimer: CountDownTimer? = null
@@ -36,7 +39,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     override fun onInit(status: Int) {
         //check if TTS works
         if(status == TextToSpeech.SUCCESS) {
-            //set US English ad a language for TTS
+            //set US English as a language for TTS
             val result = tts!!.setLanguage(Locale.US)
 
             if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -97,6 +100,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             tts!!.shutdown()
         }
 
+        if(player != null) {
+            player!!.stop()
+        }
+
         super.onDestroy()
     }
 
@@ -142,6 +149,15 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun setupRestView(){
+
+        try{
+            player = MediaPlayer.create(applicationContext, R.raw.press_start)
+            player?.isLooping = false
+            player?.start()
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+
         if(restTimer != null){
             restTimer!!.cancel()
             restProgress = 0
