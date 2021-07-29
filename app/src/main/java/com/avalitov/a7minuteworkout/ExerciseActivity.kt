@@ -8,6 +8,9 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_exercise.*
 import org.w3c.dom.Text
 import java.lang.Exception
 import java.util.*
@@ -21,11 +24,13 @@ lateinit var tvTimerExercise : TextView
 lateinit var ivImage : ImageView
 lateinit var tvExerciseName : TextView
 lateinit var tvUpcomingExercise : TextView
+lateinit var rvExerciseStatus : RecyclerView
 
 class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = null // variable for TextToSpeech
     private var player: MediaPlayer? = null // variable for Media Player
+    private var exerciseAdapter: ExerciseStatusAdapter? = null
 
     private var restTimer: CountDownTimer? = null
     private var exerciseTimer: CountDownTimer? = null
@@ -60,14 +65,15 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise)
 
-        llRestView = findViewById(R.id.llRestView)
-        llExerciseView = findViewById(R.id.llExerciseView)
+        //llRestView = findViewById(R.id.llRestView)
+        //llExerciseView = findViewById(R.id.llExerciseView)
         toolbarExerciseActivity = findViewById(R.id.toolbar_exercise_activity)
         tvTimerRest = findViewById(R.id.tv_timer_rest)
         tvTimerExercise = findViewById(R.id.tv_timer_exercise)
         ivImage = findViewById(R.id.iv_image)
         tvExerciseName = findViewById(R.id.tv_exercise_name)
         tvUpcomingExercise = findViewById(R.id.tv_upcoming_exercise)
+        //rvExerciseStatus = findViewById(R.id.rvExerciseStatus)
 
         setSupportActionBar(toolbarExerciseActivity)
         val actionbar = supportActionBar
@@ -83,6 +89,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         exerciseList = Constants.defaultExerciseList()
 
         setupRestView()
+        setupExerciseStatusRecyclerView()
     }
 
     override fun onDestroy() {
@@ -187,6 +194,17 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         //showing the name and image of a new exercise
         ivImage.setImageResource(exerciseList!![currentExercisePosition].getImageNumber())
         tvExerciseName.text = exerciseList!![currentExercisePosition].getName()
+    }
+
+    private fun setupExerciseStatusRecyclerView(){
+        rvExerciseStatus.layoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.HORIZONTAL, false)
+
+        exerciseAdapter = ExerciseStatusAdapter(exerciseList!!, this)
+
+        rvExerciseStatus.adapter = exerciseAdapter
+
+
     }
 
 }
