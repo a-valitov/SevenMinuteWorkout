@@ -126,12 +126,19 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
             override fun onFinish() {
                 currentExercisePosition++
+
+                // to show on RecycleView on which exercise we are
+                exerciseList!![currentExercisePosition].setIsCompleted(true)
+                exerciseList!![currentExercisePosition].setIsSelected(false)
+                exerciseAdapter!!.notifyDataSetChanged()
+
                 setupExerciseView()
             }
         }.start()
     }
 
     private fun setExerciseProgressBar(){
+        exerciseList!![currentExercisePosition].setIsSelected(true)
         var progressBarExercise : ProgressBar = findViewById(R.id.progressBar_exercise)
         progressBarExercise.progress = exerciseProgress
 
@@ -143,6 +150,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
             override fun onFinish() {
                 if(currentExercisePosition < exerciseList!!.size - 1) {
+                    exerciseList!![currentExercisePosition].setIsSelected(false)
+                    exerciseList!![currentExercisePosition].setIsCompleted(true)
                     setupRestView()
                 } else {
                     Toast.makeText(this@ExerciseActivity,
@@ -184,6 +193,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             exerciseProgress = 0
         }
 
+        exerciseList!![currentExercisePosition].setIsSelected(true)
+
         llRestView.visibility = View.GONE
         llExerciseView.visibility = View.VISIBLE
 
@@ -203,8 +214,6 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         exerciseAdapter = ExerciseStatusAdapter(exerciseList!!, this)
 
         rvExerciseStatus.adapter = exerciseAdapter
-
-
     }
 
 }
