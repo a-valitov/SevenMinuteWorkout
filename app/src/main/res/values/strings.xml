@@ -4,4 +4,10 @@
     <string name="image">image</string>
     <string name="str_start">START</string>
 
+    <string name="are_you_sure_title">Are you sure?</string>
+    <string name="are_you_sure_text">This will stop your workout. You have come this far, are you sure you want to quit?</string>
+
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+
 </resources>

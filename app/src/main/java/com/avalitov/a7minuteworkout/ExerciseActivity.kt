@@ -1,5 +1,6 @@
 package com.avalitov.a7minuteworkout
 
+import android.app.Dialog
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,6 +26,10 @@ lateinit var ivImage : ImageView
 lateinit var tvExerciseName : TextView
 lateinit var tvUpcomingExercise : TextView
 lateinit var rvExerciseStatus : RecyclerView
+
+lateinit var mAreYouSureDialog: Dialog
+lateinit var btnSureYes : Button
+lateinit var btnSureNo : Button
 
 class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
@@ -112,6 +117,12 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
 
         super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        showAreYouSureDialog()
+//        restTimer?.cancel()
+//        exerciseTimer?.cancel()
     }
 
     private fun setRestProgressBar(){
@@ -214,6 +225,33 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         exerciseAdapter = ExerciseStatusAdapter(exerciseList!!, this)
 
         rvExerciseStatus.adapter = exerciseAdapter
+    }
+
+
+    private fun showAreYouSureDialog() {
+        mAreYouSureDialog = Dialog(this@ExerciseActivity)
+        mAreYouSureDialog.setContentView(R.layout.dialog_custom_are_you_sure)
+
+        btnSureNo = mAreYouSureDialog.findViewById(R.id.btn_sure_no)
+        btnSureYes = mAreYouSureDialog.findViewById(R.id.btn_sure_yes)
+
+
+        btnSureYes.setOnClickListener(){
+            dismissAreYouSureDialog()
+            super.onBackPressed()
+            //finish()
+        }
+
+        btnSureNo.setOnClickListener(){
+            //TODO: Pause a timer while the dialog is showing?
+            dismissAreYouSureDialog()
+        }
+
+        mAreYouSureDialog.show()
+    }
+
+    private fun dismissAreYouSureDialog() {
+        mAreYouSureDialog.dismiss()
     }
 
 }
