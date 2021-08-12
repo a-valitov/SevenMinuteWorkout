@@ -37,6 +37,33 @@
                 />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_BMI"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:gravity="center"
+                android:background="@drawable/item_circular_color_accent_background">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="BMI"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
 
