@@ -21,4 +21,6 @@
     <color name="textDarkGray">#444444</color>
 
     <color name="circularItemGray">#212121</color>
+    <color name="colorRadioGroupBackgroundGray">#ECEDEF</color>
+    <color name="colorRadioGroupBorderGray">#9AA2AF</color>
 </resources>
