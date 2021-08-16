@@ -1,6 +1,7 @@
 package com.avalitov.a7minuteworkout
 
 import android.app.Dialog
+import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -165,10 +166,9 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     exerciseList!![currentExercisePosition].setIsCompleted(true)
                     setupRestView()
                 } else {
-                    Toast.makeText(this@ExerciseActivity,
-                    "Congratulations! You have completed your 7 minutes workout!",
-                    Toast.LENGTH_SHORT
-                    ).show()
+                    val intent = Intent(this@ExerciseActivity, FinishActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
 
             }
@@ -243,7 +243,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
 
         btnSureNo.setOnClickListener(){
-            //TODO: Pause a timer while the dialog is showing?
+            //TODO: Pause timer while the dialog is showing?
             dismissAreYouSureDialog()
         }
 
