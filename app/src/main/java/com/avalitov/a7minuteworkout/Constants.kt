@@ -12,8 +12,8 @@ class Constants {
             val jumpingJacks = ExerciseModel(1, "Jumping Jacks", R.drawable.ic_jumping_jacks, false, false)
             exerciseList.add(jumpingJacks)
 
-//            val wallSit = ExerciseModel(2, "Wall Sit", R.drawable.ic_wall_sit, false, false)
-//            exerciseList.add(wallSit)
+            val wallSit = ExerciseModel(2, "Wall Sit", R.drawable.ic_wall_sit, false, false)
+            exerciseList.add(wallSit)
 //
 //            val pushUp = ExerciseModel(3, "Push-Up", R.drawable.ic_push_up, false, false)
 //            exerciseList.add(pushUp)
