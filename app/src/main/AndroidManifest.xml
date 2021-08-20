@@ -31,7 +31,6 @@
             android:name=".FinishActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
